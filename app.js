@@ -10,6 +10,10 @@ const logger       = require('morgan');
 const path         = require('path');
 const cors = require("cors");
 
+// Added
+const errorHandler = require('./configs/error-handler');
+require('rootpath')();
+
 require("./configs/db");
 
 const app_name = require('./package.json').name;
@@ -54,6 +58,9 @@ app.use(
 
 const index = require('./routes/index');
 app.use('/', index);
+
+// global error handler
+app.use(errorHandler);
 
 app.use((req, res, next) => {
   // If no routes match, send them the React HTML.
